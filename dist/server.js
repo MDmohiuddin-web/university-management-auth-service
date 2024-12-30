@@ -18,7 +18,7 @@ const index_1 = __importDefault(require("./config/index"));
 const db = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(index_1.default.database_url);
-        console.log(`✌️Data base connected success fully✌️`);
+        console.log(`✌️ Data base connected success fully ✌️`);
         app_1.default.listen(index_1.default.port, () => {
             console.log(`Server is running on PORT ${index_1.default.port}`);
         });
