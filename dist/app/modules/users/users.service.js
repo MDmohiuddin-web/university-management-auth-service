@@ -12,17 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const users_route_1 = __importDefault(require("./app/modules/users/users.route"));
-const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
-app.use(express_1.default.json());
-app.use(express_1.default.urlencoded({ extended: true }));
-// application routes
-app.use('/api/v1/users/', users_route_1.default);
-// testing
-app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('working successfully');
-}));
-exports.default = app;
+const users_model_1 = require("./users.model");
+const config_1 = __importDefault(require("../../../config"));
+const users_utils_1 = require("./users.utils");
+const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    // auto inclement the id and default password
+    const id = yield (0, users_utils_1.generateUserId)();
+    user.id = id;
+    if (!user.password) {
+        user.password = config_1.default.default_user_password;
+    }
+    const createdUser = yield users_model_1.User.create(user);
+    if (!createdUser) {
+        throw new Error('Failed to create user');
+    }
+    return createdUser;
+});
+exports.default = {
+    createUser,
+};

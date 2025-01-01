@@ -12,17 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const users_route_1 = __importDefault(require("./app/modules/users/users.route"));
-const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
-app.use(express_1.default.json());
-app.use(express_1.default.urlencoded({ extended: true }));
-// application routes
-app.use('/api/v1/users/', users_route_1.default);
-// testing
-app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.send('working successfully');
-}));
-exports.default = app;
+const users_service_1 = __importDefault(require("./users.service"));
+const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { user } = req.body;
+        const result = yield users_service_1.default.createUser(user);
+        res
+            .status(200)
+            .json({ data: result, message: 'user created successfully', status: true });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'failed to create user' });
+    }
+});
+exports.default = {
+    createUser,
+};
