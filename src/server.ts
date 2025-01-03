@@ -1,19 +1,19 @@
-import mongoose from "mongoose";
-import app from "./app";
-import config from "./config/index";
+import mongoose from 'mongoose'
+import app from './app'
+import config from './config/index'
+import { logger, Errorlogger } from './shared/logger'
 
 const db = async () => {
   try {
-    await mongoose.connect(config.database_url as string); 
-    console.log(`✌️ Data base connected success fully ✌️`);
+    await mongoose.connect(config.database_url as string)
+    logger.info(`✌️ Data base connected success fully ✌️`)
 
     app.listen(config.port, () => {
-      console.log(`Server is running on PORT ${config.port}`);
-    });
+      logger.info(`Server is running on PORT ${config.port}`)
+    })
   } catch (error) {
-    console.error(`Error connecting to database`);
+    Errorlogger.error(`Error connecting to database`)
   }
-};
+}
 
-db();
-
+db()
