@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const users_model_1 = require("./users.model");
 const config_1 = __importDefault(require("../../../config"));
 const users_utils_1 = require("./users.utils");
+const ApiErrors_1 = __importDefault(require("../../../errors/ApiErrors"));
 const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     // auto inclement the id and default password
     const id = yield (0, users_utils_1.generateUserId)();
@@ -24,7 +25,7 @@ const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     }
     const createdUser = yield users_model_1.User.create(user);
     if (!createdUser) {
-        throw new Error('Failed to create user');
+        throw new ApiErrors_1.default(400, 'Failed to create user');
     }
     return createdUser;
 });
