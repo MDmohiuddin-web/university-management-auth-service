@@ -15,16 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = __importDefault(require("./app"));
 const index_1 = __importDefault(require("./config/index"));
+const logger_1 = require("./shared/logger");
 const db = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(index_1.default.database_url);
-        console.log(`✌️ Data base connected success fully ✌️`);
+        logger_1.logger.info(`✌️ Data base connected success fully ✌️`);
         app_1.default.listen(index_1.default.port, () => {
-            console.log(`Server is running on PORT ${index_1.default.port}`);
+            logger_1.logger.info(`Server is running on PORT ${index_1.default.port}`);
         });
     }
     catch (error) {
-        console.error(`Error connecting to database`);
+        logger_1.errorLogger.error(`Error connecting to database`);
     }
 });
 db();
