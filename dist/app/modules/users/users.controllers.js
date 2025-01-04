@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const users_service_1 = __importDefault(require("./users.service"));
-const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { user } = req.body;
         const result = yield users_service_1.default.createUser(user);
@@ -22,8 +22,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             .json({ data: result, message: 'user created successfully', status: true });
     }
     catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'failed to create user' });
+        next(error);
     }
 });
 exports.default = {
