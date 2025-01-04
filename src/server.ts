@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import app from './app'
 import config from './config/index'
-import { logger, Errorlogger } from './shared/logger'
+import { errorLogger, logger,  } from './shared/logger'
 
 const db = async () => {
   try {
@@ -12,7 +12,7 @@ const db = async () => {
       logger.info(`Server is running on PORT ${config.port}`)
     })
   } catch (error) {
-    Errorlogger.error(`Error connecting to database`)
+    errorLogger.error(`Error connecting to database`)
   }
 }
 
