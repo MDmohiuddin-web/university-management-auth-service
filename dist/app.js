@@ -14,16 +14,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const users_route_1 = __importDefault(require("./app/modules/users/users.route"));
 const globalErrorHnadelar_1 = __importDefault(require("./app/middlewares/globalErrorHnadelar"));
+const user_route_1 = require("./app/modules/users/user.route");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 // application routes
-app.use('/api/v1/users/', users_route_1.default);
+app.use('/api/v1/users/', user_route_1.userRoutes);
 // testing
-app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // throw new ApiError(400, 'Internal Server Error')
     res.send('working successfully');
 }));

@@ -12,21 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const users_service_1 = __importDefault(require("./users.service"));
-const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { user } = req.body;
-        const result = yield users_service_1.default.createUser(user);
-        res.status(200).json({
-            data: result,
-            message: 'user created successfully',
-            status: true,
-        });
+exports.usersService = void 0;
+const user_model_1 = require("./user.model");
+const config_1 = __importDefault(require("../../../config"));
+const user_utils_1 = require("./user.utils");
+const ApiErrors_1 = __importDefault(require("../../../errors/ApiErrors"));
+const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    // auto inclement the id and default password
+    const id = yield (0, user_utils_1.generateUserId)();
+    user.id = id;
+    if (!user.password) {
+        user.password = config_1.default.default_user_password;
     }
-    catch (error) {
-        next(error);
+    const createdUser = yield user_model_1.User.create(user);
+    if (!createdUser) {
+        throw new ApiErrors_1.default(400, 'Failed to create user');
     }
+    return createdUser;
 });
-exports.default = {
+exports.usersService = {
     createUser,
 };

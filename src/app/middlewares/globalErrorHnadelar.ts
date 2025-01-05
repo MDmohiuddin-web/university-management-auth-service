@@ -1,8 +1,9 @@
-import { NextFunction, Request, Response } from 'express'
+import { ErrorRequestHandler, Request, Response, NextFunction } from 'express'
 import config from '../../config'
 import IGenericErrorMessage from '../../Interface/error'
 import validationErrorHandler from '../../errors/validationErrorHandler'
 import ApiError from '../../errors/ApiErrors'
+import { errorLogger } from '../../shared/logger'
 
 /**
  * Global error handler middleware
@@ -11,12 +12,16 @@ import ApiError from '../../errors/ApiErrors'
  * @param {Response} res - The response object
  * @param {NextFunction} next - The next middleware to be called after this one
  */
-const globalErrorHandler = (
+const globalErrorHandler: ErrorRequestHandler = (
   err: any,
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
+  config.env === 'development'
+    ? console.log(err, 'globalErrorHandler ✌️🧨')
+    : errorLogger.error(err, 'globalErrorHandler 😲')
+    
   let statusCode = 500
   let message = 'Something went wrong'
   let errMessage: IGenericErrorMessage[] = []
@@ -29,31 +34,30 @@ const globalErrorHandler = (
     statusCode = simpleErrors.statusCode
     message = simpleErrors.message
     errMessage = simpleErrors.errorMessages
-  } else if (err instanceof Error) {
-  /**
-   * Handle general errors
-   */
+  } else if (err instanceof ApiError) {
+    /**
+     * Handle custom API errors
+     */
+    statusCode = err.statusCode
     message = err.message
-    errMessage = err?.message
+    errMessage = err.message
       ? [
           {
             path: '',
-            message: err?.message,
+            message: err.message,
           },
         ]
       : []
-  } else if (err instanceof ApiError) {
-
-  /**
-   * Handle custom API errors
-   */
-    statusCode = err.statusCode
+  } else if (err instanceof Error) {
+    /**
+     * Handle general errors
+     */
     message = err.message
-    errMessage = err?.message
+    errMessage = err.message
       ? [
           {
             path: '',
-            message: err?.message,
+            message: err.message,
           },
         ]
       : []
