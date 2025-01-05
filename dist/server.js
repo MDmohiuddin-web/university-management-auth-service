@@ -16,16 +16,40 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = __importDefault(require("./app"));
 const index_1 = __importDefault(require("./config/index"));
 const logger_1 = require("./shared/logger");
+let server;
+process.on('uncaughtException', error => {
+    console.error('uncaughtException we are closing the server ...');
+    logger_1.errorLogger.error(error);
+    process.exit(1);
+});
 const db = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield mongoose_1.default.connect(index_1.default.database_url);
         logger_1.logger.info(`✌️ Data base connected success fully ✌️`);
-        app_1.default.listen(index_1.default.port, () => {
+        server = app_1.default.listen(index_1.default.port, () => {
             logger_1.logger.info(`Server is running on PORT ${index_1.default.port}`);
         });
     }
     catch (error) {
         logger_1.errorLogger.error(`Error connecting to database`);
     }
+    process.on('unhandledRejection', error => {
+        console.log('unhandledRejection we are closing the server ...');
+        if (server) {
+            server.close(() => {
+                logger_1.errorLogger.error(error);
+                process.exit(1);
+            });
+        }
+        else {
+            process.exit(1);
+        }
+    });
 });
 db();
+process.on('SIGTERM', () => {
+    logger_1.logger.info('SIGTERM is received');
+    if (server) {
+        server.close();
+    }
+});

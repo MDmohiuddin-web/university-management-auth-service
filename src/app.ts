@@ -13,8 +13,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/v1/users/', userRoutes)
 
 // testing
-app.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  // throw new ApiError(400, 'Internal Server Error')
+app.get('/',  (req: Request, res: Response, next: NextFunction) => {
+  //  throw new Error( 'Internal Server Error testing')
   res.send('working successfully')
 })
 // global error handler
