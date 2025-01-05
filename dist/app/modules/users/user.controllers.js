@@ -8,15 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const users_service_1 = __importDefault(require("./users.service"));
+exports.UserController = void 0;
+const user_service_1 = require("./user.service");
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { user } = req.body;
-        const result = yield users_service_1.default.createUser(user);
+        const result = yield user_service_1.usersService.createUser(user);
         res.status(200).json({
             data: result,
             message: 'user created successfully',
@@ -27,6 +25,6 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(error);
     }
 });
-exports.default = {
+exports.UserController = {
     createUser,
 };
