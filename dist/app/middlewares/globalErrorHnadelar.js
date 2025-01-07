@@ -7,54 +7,55 @@ const config_1 = __importDefault(require("../../config"));
 const validationErrorHandler_1 = __importDefault(require("../../errors/validationErrorHandler"));
 const ApiErrors_1 = __importDefault(require("../../errors/ApiErrors"));
 const logger_1 = require("../../shared/logger");
-/**
- * Global error handler middleware
- * @param {Error} err - The error object to be handled
- * @param {Request} req - The request object
- * @param {Response} res - The response object
- * @param {NextFunction} next - The next middleware to be called after this one
- */
-const globalErrorHandler = (err, req, res, next) => {
+const zod_1 = require("zod");
+const handelZodError_1 = __importDefault(require("../../errors/handelZodError"));
+const globalErrorHandler = (error, req, res, next) => {
     config_1.default.env === 'development'
-        ? console.log(err, 'globalErrorHandler ✌️🧨')
-        : logger_1.errorLogger.error(err, 'globalErrorHandler 😲');
+        ? console.log(error, 'globalErrorHandler ✌️🧨')
+        : logger_1.errorLogger.error(error, 'globalErrorHandler 😲');
     let statusCode = 500;
     let message = 'Something went wrong';
     let errMessage = [];
     /**
      * Handle mongoose validation errors
      */
-    if (err.name === 'ValidationError') {
-        const simpleErrors = (0, validationErrorHandler_1.default)(err);
+    if (error.name === 'ValidationError') {
+        const simpleErrors = (0, validationErrorHandler_1.default)(error);
         statusCode = simpleErrors.statusCode;
         message = simpleErrors.message;
         errMessage = simpleErrors.errorMessages;
     }
-    else if (err instanceof ApiErrors_1.default) {
+    else if (error instanceof zod_1.ZodError) {
+        const simpleErrors = (0, handelZodError_1.default)(error);
+        statusCode = simpleErrors.statusCode;
+        message = simpleErrors.message;
+        errMessage = simpleErrors.errorMessages;
+    }
+    else if (error instanceof ApiErrors_1.default) {
         /**
          * Handle custom API errors
          */
-        statusCode = err.statusCode;
-        message = err.message;
-        errMessage = err.message
+        statusCode = error.statusCode;
+        message = error.message;
+        errMessage = error.message
             ? [
                 {
                     path: '',
-                    message: err.message,
+                    message: error.message,
                 },
             ]
             : [];
     }
-    else if (err instanceof Error) {
+    else if (error instanceof Error) {
         /**
          * Handle general errors
          */
-        message = err.message;
-        errMessage = err.message
+        message = error.message;
+        errMessage = error.message
             ? [
                 {
                     path: '',
-                    message: err.message,
+                    message: error.message,
                 },
             ]
             : [];
@@ -66,7 +67,7 @@ const globalErrorHandler = (err, req, res, next) => {
         success: false,
         message: message,
         errorMessages: errMessage,
-        stack: config_1.default.env !== 'production' ? err.stack : undefined,
+        stack: config_1.default.env !== 'production' ? error.stack : undefined,
     });
     /**
      * Call the next middleware
