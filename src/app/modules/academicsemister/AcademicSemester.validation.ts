@@ -1,6 +1,9 @@
-
-import { string, z } from 'zod'
-import { academicSemesterCodes, academicSemesterMonths, academicSemesterTitles } from './academicSemester.constant'
+import { z } from 'zod'
+import {
+  academicSemesterCodes,
+  academicSemesterMonths,
+  academicSemesterTitles,
+} from './academicSemester.constant'
 
 const AcademicSemesterZodSchema = z.object({
   body: z.object({

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+
 import { User } from './user.model'
 import { IUser } from './user.interface'
 import config from '../../../config'

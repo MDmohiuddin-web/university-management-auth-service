@@ -1,5 +1,5 @@
 import express from 'express'
-import { UserController } from './user.controllers'
+import { UserController } from './user.controller'
 import { UserValidation } from './user.validation'
 import ValidationRequest from '../../middlewares/ValidationRequest'
 
