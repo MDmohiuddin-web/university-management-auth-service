@@ -11,8 +11,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const user_service_1 = require("./user.service");
+const zod_1 = require("zod");
 const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const createUserZodSchema = zod_1.z.object({
+            body: zod_1.z.object({
+                role: zod_1.z.string({
+                    required_error: 'role is required',
+                }),
+                password: zod_1.z.string().optional(),
+            }),
+        });
+        // Parse and validate the request body
+        yield createUserZodSchema.parseAsync({ body: req.body });
         const { user } = req.body;
         const result = yield user_service_1.usersService.createUser(user);
         res.status(200).json({
