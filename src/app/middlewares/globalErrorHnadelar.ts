@@ -4,24 +4,21 @@ import IGenericErrorMessage from '../../Interface/error'
 import validationErrorHandler from '../../errors/validationErrorHandler'
 import ApiError from '../../errors/ApiErrors'
 import { errorLogger } from '../../shared/logger'
+import { ZodError } from 'zod'
+import handelZodError from '../../errors/handelZodError'
 
-/**
- * Global error handler middleware
- * @param {Error} err - The error object to be handled
- * @param {Request} req - The request object
- * @param {Response} res - The response object
- * @param {NextFunction} next - The next middleware to be called after this one
- */
+
+
 const globalErrorHandler: ErrorRequestHandler = (
-  err: any,
+  error: any,
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   config.env === 'development'
-    ? console.log(err, 'globalErrorHandler ✌️🧨')
-    : errorLogger.error(err, 'globalErrorHandler 😲')
-    
+    ? console.log(error, 'globalErrorHandler ✌️🧨')
+    : errorLogger.error(error, 'globalErrorHandler 😲')
+
   let statusCode = 500
   let message = 'Something went wrong'
   let errMessage: IGenericErrorMessage[] = []
@@ -29,35 +26,40 @@ const globalErrorHandler: ErrorRequestHandler = (
   /**
    * Handle mongoose validation errors
    */
-  if (err.name === 'ValidationError') {
-    const simpleErrors = validationErrorHandler(err)
+  if (error.name === 'ValidationError') {
+    const simpleErrors = validationErrorHandler(error)
     statusCode = simpleErrors.statusCode
     message = simpleErrors.message
     errMessage = simpleErrors.errorMessages
-  } else if (err instanceof ApiError) {
+  } else if (error instanceof ZodError) {
+    const simpleErrors = handelZodError(error)
+    statusCode = simpleErrors.statusCode
+    message = simpleErrors.message
+    errMessage = simpleErrors.errorMessages
+  } else if (error instanceof ApiError) {
     /**
      * Handle custom API errors
      */
-    statusCode = err.statusCode
-    message = err.message
-    errMessage = err.message
+    statusCode = error.statusCode
+    message = error.message
+    errMessage = error.message
       ? [
           {
             path: '',
-            message: err.message,
+            message: error.message,
           },
         ]
       : []
-  } else if (err instanceof Error) {
+  } else if (error instanceof Error) {
     /**
      * Handle general errors
      */
-    message = err.message
-    errMessage = err.message
+    message = error.message
+    errMessage = error.message
       ? [
           {
             path: '',
-            message: err.message,
+            message: error.message,
           },
         ]
       : []
@@ -70,7 +72,7 @@ const globalErrorHandler: ErrorRequestHandler = (
     success: false,
     message: message,
     errorMessages: errMessage,
-    stack: config.env !== 'production' ? err.stack : undefined,
+    stack: config.env !== 'production' ? error.stack : undefined,
   })
 
   /**

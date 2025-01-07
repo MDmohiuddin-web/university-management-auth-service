@@ -1,11 +1,10 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express'
 
-
 import { AnyObject } from 'mongoose'
 
 const ValidationRequest =
   (Schema: AnyObject) =>
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       await Schema.parseAsync({
         body: req.body,
