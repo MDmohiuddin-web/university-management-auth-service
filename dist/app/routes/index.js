@@ -19,5 +19,6 @@ const modulesRoutes = [
 ];
 // router.use('/users/', userRoutes)
 // router.use('/academic-semesters/', convertYearToNumber,AcademicSemesterRoutes)
+// code optimization 
 modulesRoutes.forEach(route => router.use(route.path, route.route));
 exports.default = router;
