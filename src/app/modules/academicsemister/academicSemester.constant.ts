@@ -1,3 +1,4 @@
+
 import { IAcademicSemesterCodes, IAcademicSemesterMonths, IAcademicSemesterTitles } from './academicsemister.interface'
 
 
@@ -19,6 +20,13 @@ export const academicSemesterMonths: IAcademicSemesterMonths[] = [
   'November',
   'December',
 ]
+
+export const academicSemesterTitleCodeMapper: { [key: string]: string } = {
+  Autumn: '01',
+  Summer: '02',
+  Fall: '03',
+}
+// add new semester
 
 
 
