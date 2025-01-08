@@ -10,6 +10,7 @@ const logger_1 = require("../../shared/logger");
 const zod_1 = require("zod");
 const handelZodError_1 = __importDefault(require("../../errors/handelZodError"));
 const globalErrorHandler = (error, req, res, next) => {
+    console.log(error);
     config_1.default.env === 'development'
         ? console.log(error, 'globalErrorHandler ✌️🧨')
         : logger_1.errorLogger.error(error, 'globalErrorHandler 😲');

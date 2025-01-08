@@ -5,13 +5,11 @@ const zod_1 = require("zod");
 const createUserZodSchema = zod_1.z.object({
     body: zod_1.z.object({
         role: zod_1.z.string({
-            required_error: 'role is required',
+            required_error: "Role is required",
         }),
         password: zod_1.z.string().optional(),
     }),
 });
-// Parse and validate the request body
-// await createUserZodSchema.parseAsync({ body: req.body })
 exports.UserValidation = {
-    createUserZodSchema
+    createUserZodSchema,
 };

@@ -26,3 +26,4 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 app.use(globalErrorHandler)
 
 export default app
+

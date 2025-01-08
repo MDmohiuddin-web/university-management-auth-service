@@ -15,9 +15,9 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     try {
         const { user } = req.body;
         const result = yield user_service_1.usersService.createUser(user);
-        res.status(200).json({
+        res.status(201).json({
             data: result,
-            message: 'user created successfully',
+            message: 'User created successfully',
             status: true,
         });
     }
