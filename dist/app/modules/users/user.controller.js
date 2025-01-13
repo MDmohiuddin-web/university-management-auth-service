@@ -26,7 +26,12 @@ const createUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 
     //   message: 'User created successfully',
     //   status: true,
     // })
-    (0, sendResponse_1.default)(res, { data: result, message: 'User created successfully', success: true, statusCode: http_status_1.default.OK });
+    (0, sendResponse_1.default)(res, {
+        data: result,
+        message: 'User created successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+    });
 }));
 exports.UserController = {
     createUser,

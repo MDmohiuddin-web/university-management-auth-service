@@ -10,15 +10,15 @@ const router = express_1.default.Router();
 const modulesRoutes = [
     {
         path: '/users',
-        route: user_route_1.userRoutes
+        route: user_route_1.userRoutes,
     },
     {
         path: '/academic-semesters',
-        route: academicSemester_route_1.AcademicSemesterRoutes
-    }
+        route: academicSemester_route_1.AcademicSemesterRoutes,
+    },
 ];
 // router.use('/users/', userRoutes)
 // router.use('/academic-semesters/', convertYearToNumber,AcademicSemesterRoutes)
-// code optimization 
+// code optimization
 modulesRoutes.forEach(route => router.use(route.path, route.route));
 exports.default = router;

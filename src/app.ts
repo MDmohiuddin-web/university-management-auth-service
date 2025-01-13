@@ -1,9 +1,12 @@
+import httpStatus from 'http-status'
+
 import express, { Application, NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 
 import globalErrorHandler from './app/middlewares/globalErrorHnadelar'
 
 import router from './app/routes'
+
 
 const app: Application = express()
 
@@ -24,5 +27,15 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 })
 // global error handler
 app.use(globalErrorHandler)
+
+// handle not found
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.status(httpStatus.NOT_FOUND).json({
+    status: 'fail',
+    message: `Can't find ${req.originalUrl} on this server!`,
+    errorMessages: [{ path: `${req.originalUrl}`, message: 'API Not Found' }],
+  })
+  next()
+})
 
 export default app

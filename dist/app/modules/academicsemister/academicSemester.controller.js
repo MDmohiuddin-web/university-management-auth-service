@@ -31,13 +31,18 @@ const http_status_1 = __importDefault(require("http-status"));
 const createSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const academicSemesterData = __rest(req.body, []);
     const result = yield academicsemister_service_1.academicSemesterService.createSemester(academicSemesterData);
-    next();
     // res.status(201).json({
     //   data: result,
     //   message: 'Semester created successfully',
     //   status: true,
     // })
-    (0, sendResponse_1.default)(res, { data: result, message: 'User created successfully', success: true, statusCode: http_status_1.default.OK });
+    (0, sendResponse_1.default)(res, {
+        data: result,
+        message: 'User created successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+    });
+    next();
 }));
 exports.AcademicSemesterController = {
     createSemester,
