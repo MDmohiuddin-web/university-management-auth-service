@@ -32,7 +32,7 @@ app.use(globalErrorHandler)
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
     status: 'fail',
-    message: `Can't find ${req.originalUrl} on this server!`,
+    message: `Can't find'${req.originalUrl}' on this server!`,
     errorMessages: [{ path: `${req.originalUrl}`, message: 'API Not Found' }],
   })
   next()
