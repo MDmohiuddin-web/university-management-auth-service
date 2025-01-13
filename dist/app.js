@@ -28,7 +28,7 @@ app.use(globalErrorHnadelar_1.default);
 app.use((req, res, next) => {
     res.status(http_status_1.default.NOT_FOUND).json({
         status: 'fail',
-        message: `Can't find ${req.originalUrl} on this server!`,
+        message: `Can't find'${req.originalUrl}' on this server!`,
         errorMessages: [{ path: `${req.originalUrl}`, message: 'API Not Found' }],
     });
     next();

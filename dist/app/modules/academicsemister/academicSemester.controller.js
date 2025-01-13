@@ -28,6 +28,8 @@ const academicsemister_service_1 = require("./academicsemister.service");
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
+const pick_1 = __importDefault(require("../../../shared/pick"));
+const pagenation_1 = require("../../../conostants/pagenation");
 const createSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const academicSemesterData = __rest(req.body, []);
     const result = yield academicsemister_service_1.academicSemesterService.createSemester(academicSemesterData);
@@ -38,12 +40,32 @@ const createSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(v
     // })
     (0, sendResponse_1.default)(res, {
         data: result,
-        message: 'User created successfully',
+        message: 'semester created successfully',
         success: true,
         statusCode: http_status_1.default.OK,
     });
     next();
 }));
+const getAllSemesters = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    // const paginationOptions = {
+    //   page: Number(req.query.page),
+    //   limit: Number(req.query.limit),
+    //   sortBy: req.query.sortBy,
+    //   sortOrder: req.query.sortOrder,
+    // }
+    // or
+    const paginationOptions = (0, pick_1.default)(req.query, pagenation_1.paginationFields);
+    // console.log(paginationOptions)
+    const result = yield academicsemister_service_1.academicSemesterService.getallSemester(paginationOptions);
+    (0, sendResponse_1.default)(res, {
+        data: result,
+        message: 'semester retrieved successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+    });
+    // next()
+}));
 exports.AcademicSemesterController = {
     createSemester,
+    getAllSemesters,
 };

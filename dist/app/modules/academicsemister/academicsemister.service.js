@@ -25,6 +25,10 @@ const createSemester = (payload) => __awaiter(void 0, void 0, void 0, function* 
     const result = yield academicsemister_model_1.AcademicSemester.create(payload);
     return result;
 });
+const getallSemester = (paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield academicsemister_model_1.AcademicSemester.find();
+    return result;
+});
 exports.academicSemesterService = {
-    createSemester,
+    createSemester, getallSemester
 };
