@@ -58,3 +58,15 @@
   label: 'right now!',
   timestamp: '2025-01-15T15:24:40.028Z'
 }
+{
+  message: '✌️ Data base connected success fully ✌️',
+  level: 'info',
+  label: 'right now!',
+  timestamp: '2025-01-15T15:44:03.842Z'
+}
+{
+  message: 'Server is running on PORT 5000',
+  level: 'info',
+  label: 'right now!',
+  timestamp: '2025-01-15T15:44:03.848Z'
+}
