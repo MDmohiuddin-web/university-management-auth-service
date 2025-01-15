@@ -33,35 +33,24 @@ const pagenation_1 = require("../../../conostants/pagenation");
 const createSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const academicSemesterData = __rest(req.body, []);
     const result = yield academicsemister_service_1.academicSemesterService.createSemester(academicSemesterData);
-    // res.status(201).json({
-    //   data: result,
-    //   message: 'Semester created successfully',
-    //   status: true,
-    // })
     (0, sendResponse_1.default)(res, {
-        data: result,
         message: 'semester created successfully',
         success: true,
         statusCode: http_status_1.default.OK,
+        data: result,
     });
     next();
 }));
 const getAllSemesters = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    // const paginationOptions = {
-    //   page: Number(req.query.page),
-    //   limit: Number(req.query.limit),
-    //   sortBy: req.query.sortBy,
-    //   sortOrder: req.query.sortOrder,
-    // }
-    // or
     const paginationOptions = (0, pick_1.default)(req.query, pagenation_1.paginationFields);
     // console.log(paginationOptions)
-    const result = yield academicsemister_service_1.academicSemesterService.getallSemester(paginationOptions);
+    const result = yield academicsemister_service_1.academicSemesterService.getallSemesters(paginationOptions);
     (0, sendResponse_1.default)(res, {
-        data: result,
+        meta: result.meta,
         message: 'semester retrieved successfully',
         success: true,
         statusCode: http_status_1.default.OK,
+        data: result.data,
     });
     // next()
 }));
