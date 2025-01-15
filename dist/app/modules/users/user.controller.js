@@ -8,23 +8,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const user_service_1 = require("./user.service");
-const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { user } = req.body;
-        const result = yield user_service_1.usersService.createUser(user);
-        res.status(200).json({
-            data: result,
-            message: 'user created successfully',
-            status: true,
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
+const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
+const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
+const http_status_1 = __importDefault(require("http-status"));
+const createUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { user } = req.body;
+    const result = yield user_service_1.usersService.createUser(user);
+    next();
+    // res.status(201).json({
+    //   data: result,
+    //   message: 'User created successfully',
+    //   status: true,
+    // })
+    (0, sendResponse_1.default)(res, {
+        data: result,
+        message: 'User created successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+    });
+}));
 exports.UserController = {
     createUser,
 };

@@ -19,23 +19,42 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AcademicSemesterController = void 0;
 const academicsemister_service_1 = require("./academicsemister.service");
-const createSemester = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const academicSemesterData = __rest(req.body, []);
-        const result = yield academicsemister_service_1.academicSemesterService.createSemester(academicSemesterData);
-        res.status(201).json({
-            data: result,
-            message: 'Semester created successfully',
-            status: true,
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
+const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
+const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
+const http_status_1 = __importDefault(require("http-status"));
+const pick_1 = __importDefault(require("../../../shared/pick"));
+const pagenation_1 = require("../../../conostants/pagenation");
+const createSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const academicSemesterData = __rest(req.body, []);
+    const result = yield academicsemister_service_1.academicSemesterService.createSemester(academicSemesterData);
+    (0, sendResponse_1.default)(res, {
+        message: 'semester created successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+        data: result,
+    });
+    next();
+}));
+const getAllSemesters = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const paginationOptions = (0, pick_1.default)(req.query, pagenation_1.paginationFields);
+    // console.log(paginationOptions)
+    const result = yield academicsemister_service_1.academicSemesterService.getallSemesters(paginationOptions);
+    (0, sendResponse_1.default)(res, {
+        meta: result.meta,
+        message: 'semester retrieved successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+        data: result.data,
+    });
+    // next()
+}));
 exports.AcademicSemesterController = {
     createSemester,
+    getAllSemesters,
 };

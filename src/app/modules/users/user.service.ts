@@ -26,3 +26,4 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
 export const usersService = {
   createUser,
 }
+
