@@ -15,7 +15,7 @@ const db = async () => {
     logger.info(`✌️ Data base connected success fully ✌️`)
 
     server = app.listen(config.port, () => {
-      logger.info(`Server is running on PORT ${config.port}`)
+      logger.info(`⛳ Server is running on PORT ${config.port} ⛳`)
     })
   } catch (error) {
     errorLogger.error(`Error connecting to database`)

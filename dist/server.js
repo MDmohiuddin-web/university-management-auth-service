@@ -27,7 +27,7 @@ const db = () => __awaiter(void 0, void 0, void 0, function* () {
         yield mongoose_1.default.connect(index_1.default.database_url);
         logger_1.logger.info(`✌️ Data base connected success fully ✌️`);
         server = app_1.default.listen(index_1.default.port, () => {
-            logger_1.logger.info(`Server is running on PORT ${index_1.default.port}`);
+            logger_1.logger.info(`⛳ Server is running on PORT ${index_1.default.port} ⛳`);
         });
     }
     catch (error) {

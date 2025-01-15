@@ -3,7 +3,7 @@ import {
   AcademicSemesterModel,
   IAcademicSemester,
 } from './academicsemister.interface'
-import status from "http-status";
+import status from 'http-status'
 import {
   academicSemesterCodes,
   academicSemesterMonths,
@@ -38,7 +38,6 @@ export const AcademicSemester = model<IAcademicSemester, AcademicSemesterModel>(
   'AcademicSemester',
   AcademicSemesterSchema,
 )
-
 
 // handselling semester and yer
 // data-> check-?same year $$same semester

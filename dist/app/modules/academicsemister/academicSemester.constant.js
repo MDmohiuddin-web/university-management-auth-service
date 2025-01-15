@@ -1,8 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.academicSemesterTitleCodeMapper = exports.academicSemesterMonths = exports.academicSemesterCodes = exports.academicSemesterTitles = void 0;
-exports.academicSemesterTitles = ['Autumn', 'Summer', 'Fall'];
-exports.academicSemesterCodes = ['01', '02', '03'];
+exports.academicSemesterFilterableFinds = exports.academicSemesterSearchableFields = exports.academicSemesterTitleCodeMapper = exports.academicSemesterMonths = exports.academicSemesterCodes = exports.academicSemesterTitles = void 0;
+exports.academicSemesterTitles = [
+    'Autumn',
+    'Summer',
+    'Fall',
+];
+exports.academicSemesterCodes = [
+    '01',
+    '02',
+    '03',
+];
 exports.academicSemesterMonths = [
     'January',
     'February',
@@ -23,3 +31,10 @@ exports.academicSemesterTitleCodeMapper = {
     Fall: '03',
 };
 // add new semester
+exports.academicSemesterSearchableFields = ['title', 'code', 'year'];
+exports.academicSemesterFilterableFinds = [
+    'searchTerm',
+    'title',
+    'code',
+    'year',
+];
