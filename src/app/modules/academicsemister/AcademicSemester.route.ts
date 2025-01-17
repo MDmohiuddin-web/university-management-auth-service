@@ -15,6 +15,8 @@ router.post(
 )
 
 router.patch('/:id', AcademicSemesterController.updateSemester)
+// ensure 1: route level :update--=>give me title nnd code,neither
+// ensure 2: route level :update--=>Mapping title :code
 router.get('/:id', AcademicSemesterController.getSingleSemesterById)
 router.get('/', AcademicSemesterController.getAllSemesters)
 

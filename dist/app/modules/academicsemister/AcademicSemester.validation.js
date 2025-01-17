@@ -8,7 +8,24 @@ const AcademicSemesterZodSchema = zod_1.z.object({
         title: zod_1.z.enum([...academicSemester_constant_1.academicSemesterTitles], {
             required_error: 'Title is required',
         }),
-        year: zod_1.z.number({ required_error: 'Year is required' }),
+        year: zod_1.z.string({ required_error: 'Year is required' }),
+        code: zod_1.z.enum([...academicSemester_constant_1.academicSemesterCodes], {
+            required_error: 'Code is required',
+        }),
+        startMonth: zod_1.z.enum([...academicSemester_constant_1.academicSemesterMonths], {
+            required_error: 'Start month is required',
+        }),
+        endMonth: zod_1.z.enum([...academicSemester_constant_1.academicSemesterMonths], {
+            required_error: 'End month is required',
+        }),
+    }),
+});
+const UpdateAcademicSemesterZodSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        title: zod_1.z.enum([...academicSemester_constant_1.academicSemesterTitles], {
+            required_error: 'Title is required',
+        }),
+        year: zod_1.z.string({ required_error: 'Year is required' }),
         code: zod_1.z.enum([...academicSemester_constant_1.academicSemesterCodes], {
             required_error: 'Code is required',
         }),
@@ -21,5 +38,5 @@ const AcademicSemesterZodSchema = zod_1.z.object({
     }),
 });
 exports.AcademicSemesterValidation = {
-    AcademicSemesterZodSchema,
+    AcademicSemesterZodSchema, UpdateAcademicSemesterZodSchema
 };
