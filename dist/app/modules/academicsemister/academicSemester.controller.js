@@ -66,8 +66,20 @@ const getSingleSemesterById = (0, catchAsync_1.default)((req, res, next) => __aw
     });
     // next()
 }));
+const updateSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const updatedData = req.body;
+    const result = yield academicsemister_service_1.academicSemesterService.updateSemester(id, updatedData);
+    (0, sendResponse_1.default)(res, {
+        message: 'Semester updated successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+        data: result,
+    });
+    // next()
+}));
 exports.AcademicSemesterController = {
     createSemester,
     getAllSemesters,
-    getSingleSemesterById,
+    getSingleSemesterById, updateSemester
 };

@@ -77,8 +77,15 @@ const getSingleSemester = (id) => __awaiter(void 0, void 0, void 0, function* ()
     const result = yield academicsemister_model_1.AcademicSemester.findById(id);
     return result;
 });
+const updateSemester = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield academicsemister_model_1.AcademicSemester.findByIdAndUpdate({ _id: id }, payload, {
+        new: true,
+    });
+    return result;
+});
 exports.academicSemesterService = {
     createSemester,
     getallSemesters,
     getSingleSemester,
+    updateSemester,
 };

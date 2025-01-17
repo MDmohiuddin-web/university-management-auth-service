@@ -14,7 +14,6 @@ import { IGenericResponse } from '../../../Interface/common'
 import { paginationHelpers } from '../../../helpes/pagenationHelpers'
 import { SortOrder } from 'mongoose'
 
-
 const createSemester = async (
   payload: IAcademicSemester,
 ): Promise<IAcademicSemester> => {
@@ -79,9 +78,24 @@ const getSingleSemester = async (
   const result = await AcademicSemester.findById(id)
   return result
 }
+const updateSemester = async (
+  id: string,
+
+  payload: Partial<IAcademicSemester>,
+): Promise<IAcademicSemester | null> => {
+  const result = await AcademicSemester.findByIdAndUpdate(
+    { _id: id },
+    payload,
+    {
+      new: true,
+    },
+  )
+  return result
+}
 
 export const academicSemesterService = {
   createSemester,
   getallSemesters,
   getSingleSemester,
+  updateSemester,
 }
