@@ -1,4 +1,4 @@
-import { ErrorRequestHandler, Request, Response, NextFunction } from 'express'
+import e, { ErrorRequestHandler, Request, Response, NextFunction } from 'express'
 import config from '../../config'
 import IGenericErrorMessage from '../../Interface/error'
 import validationErrorHandler from '../../errors/validationErrorHandler'
@@ -6,6 +6,7 @@ import ApiError from '../../errors/ApiErrors'
 import { errorLogger } from '../../shared/logger'
 import { ZodError } from 'zod'
 import handelZodError from '../../errors/handelZodError'
+import hadesCastError from '../../errors/hadesCastError'
 
 
 
@@ -15,7 +16,7 @@ const globalErrorHandler: ErrorRequestHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  console.log(error)
+  // console.log(error)
   config.env === 'development'
     ? console.log(error, 'globalErrorHandler ✌️🧨')
     : errorLogger.error(error, 'globalErrorHandler 😲')
@@ -37,7 +38,18 @@ const globalErrorHandler: ErrorRequestHandler = (
     statusCode = simpleErrors.statusCode
     message = simpleErrors.message
     errMessage = simpleErrors.errorMessages
-  } else if (error instanceof ApiError) {
+  }
+  else if (error.name === 'CastError') {
+    // res.status(400).json({error})
+    const simpleFideError = hadesCastError(error)
+    statusCode = simpleFideError.statusCode
+    message = simpleFideError.message
+    errMessage = simpleFideError.errorMessages
+
+
+  }
+      
+  else if (error instanceof ApiError) {
     /**
      * Handle custom API errors
      */
@@ -79,7 +91,7 @@ const globalErrorHandler: ErrorRequestHandler = (
   /**
    * Call the next middleware
    */
-  next()
+  
 }
 
 export default globalErrorHandler

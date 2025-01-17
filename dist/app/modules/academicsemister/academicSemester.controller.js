@@ -30,6 +30,7 @@ const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
 const pick_1 = __importDefault(require("../../../shared/pick"));
 const pagenation_1 = require("../../../conostants/pagenation");
+const academicSemester_constant_1 = require("./academicSemester.constant");
 const createSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const academicSemesterData = __rest(req.body, []);
     const result = yield academicsemister_service_1.academicSemesterService.createSemester(academicSemesterData);
@@ -41,20 +42,53 @@ const createSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(v
     });
     next();
 }));
-const getAllSemesters = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllSemesters = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const filters = Object.assign({ searchTerm: '' }, (0, pick_1.default)(req.query, academicSemester_constant_1.academicSemesterFilterableFinds));
     const paginationOptions = (0, pick_1.default)(req.query, pagenation_1.paginationFields);
-    // console.log(paginationOptions)
-    const result = yield academicsemister_service_1.academicSemesterService.getallSemesters(paginationOptions);
+    const result = yield academicsemister_service_1.academicSemesterService.getallSemesters(filters, paginationOptions);
     (0, sendResponse_1.default)(res, {
         meta: result.meta,
-        message: 'semester retrieved successfully',
+        message: 'Semester retrieved successfully',
         success: true,
         statusCode: http_status_1.default.OK,
         data: result.data,
     });
-    // next()
+}));
+const getSingleSemesterById = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const result = yield academicsemister_service_1.academicSemesterService.getSingleSemester(id);
+    (0, sendResponse_1.default)(res, {
+        message: 'Semester retrieved successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+        data: result,
+    });
+}));
+const updateSemester = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const updatedData = req.body;
+    const result = yield academicsemister_service_1.academicSemesterService.updateSemester(id, updatedData);
+    (0, sendResponse_1.default)(res, {
+        message: 'Semester updated successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+        data: result,
+    });
+}));
+const deleteSemester = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const result = yield academicsemister_service_1.academicSemesterService.deleteSemester(id);
+    (0, sendResponse_1.default)(res, {
+        message: 'Semester deleted successfully',
+        success: true,
+        statusCode: http_status_1.default.OK,
+        data: result,
+    });
 }));
 exports.AcademicSemesterController = {
     createSemester,
     getAllSemesters,
+    getSingleSemesterById,
+    updateSemester,
+    deleteSemester,
 };

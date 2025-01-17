@@ -1,0 +1,10 @@
+{
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 5000,
+  level: 'error',
+  label: 'right meow!',
+  timestamp: '2025-01-17T17:00:02.337Z'
+}

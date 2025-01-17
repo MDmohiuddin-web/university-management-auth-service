@@ -11,5 +11,10 @@ const academicSemester_validation_1 = require("./academicSemester.validation");
 const academicSemester_utils_1 = __importDefault(require("./academicSemester.utils"));
 const router = express_1.default.Router();
 router.post('/create-semester', academicSemester_utils_1.default, (0, ValidationRequest_1.default)(academicSemester_validation_1.AcademicSemesterValidation.AcademicSemesterZodSchema), academicSemester_controller_1.AcademicSemesterController.createSemester);
+router.patch('/:id', (0, ValidationRequest_1.default)(academicSemester_validation_1.AcademicSemesterValidation.UpdateAcademicSemesterZodSchema), academicSemester_controller_1.AcademicSemesterController.updateSemester);
+// ensure 1: route level :update--=>give me title nnd code,neither
+// ensure 2: route level :update--=>Mapping title :code
+router.get('/:id', academicSemester_controller_1.AcademicSemesterController.getSingleSemesterById);
+router.delete('/:id', academicSemester_controller_1.AcademicSemesterController.deleteSemester);
 router.get('/', academicSemester_controller_1.AcademicSemesterController.getAllSemesters);
 exports.AcademicSemesterRoutes = router;
