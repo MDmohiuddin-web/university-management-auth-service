@@ -13,7 +13,7 @@ import { IPaginationOptions } from '../../../Interface/PaginationOptions'
 import { IGenericResponse } from '../../../Interface/common'
 import { paginationHelpers } from '../../../helpes/pagenationHelpers'
 import { SortOrder } from 'mongoose'
-import { object } from 'zod'
+
 
 const createSemester = async (
   payload: IAcademicSemester,

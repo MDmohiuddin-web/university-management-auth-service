@@ -53,25 +53,8 @@ const getAllSemesters = (0, catchAsync_1.default)((req, res, next) => __awaiter(
         statusCode: http_status_1.default.OK,
         data: result.data,
     });
-    next();
+    // next()
 }));
-// const getAllSemesters = catchAsync(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const filters = pick(req.query, academicSemesterFilterableFinds)
-//     const paginationOptions = pick(req.query, paginationFields)
-//     // console.log(paginationOptions)
-//     const result =
-//       await academicSemesterService.getallSemesters(filters, paginationOptions)
-//     sendResponse<IAcademicSemester[]>(res, {
-//       meta: result.meta,
-//       message: 'semester retrieved successfully',
-//       success: true,
-//       statusCode: httpStatus.OK,
-//       data: result.data,
-//     })
-//     // next()
-//   },
-// )
 const getSingleSemesterById = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
     const result = yield academicsemister_service_1.academicSemesterService.getSingleSemester(id);
@@ -81,7 +64,7 @@ const getSingleSemesterById = (0, catchAsync_1.default)((req, res, next) => __aw
         statusCode: http_status_1.default.OK,
         data: result,
     });
-    next();
+    // next()
 }));
 exports.AcademicSemesterController = {
     createSemester,

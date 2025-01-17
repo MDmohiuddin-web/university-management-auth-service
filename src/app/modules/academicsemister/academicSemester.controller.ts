@@ -41,26 +41,10 @@ const getAllSemesters = catchAsync(
       statusCode: httpStatus.OK,
       data: result.data,
     })
-    next()
+    // next()
   },
 )
-// const getAllSemesters = catchAsync(
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const filters = pick(req.query, academicSemesterFilterableFinds)
-//     const paginationOptions = pick(req.query, paginationFields)
-//     // console.log(paginationOptions)
-//     const result =
-//       await academicSemesterService.getallSemesters(filters, paginationOptions)
-//     sendResponse<IAcademicSemester[]>(res, {
-//       meta: result.meta,
-//       message: 'semester retrieved successfully',
-//       success: true,
-//       statusCode: httpStatus.OK,
-//       data: result.data,
-//     })
-//     // next()
-//   },
-// )
+
 const getSingleSemesterById = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
@@ -71,7 +55,7 @@ const getSingleSemesterById = catchAsync(
       statusCode: httpStatus.OK,
       data: result,
     })
-    next()
+    // next()
   },
 )
 
