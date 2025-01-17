@@ -91,7 +91,7 @@ const globalErrorHandler: ErrorRequestHandler = (
   /**
    * Call the next middleware
    */
-  next()
+  
 }
 
 export default globalErrorHandler

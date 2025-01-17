@@ -81,6 +81,5 @@ const globalErrorHandler = (error, req, res, next) => {
     /**
      * Call the next middleware
      */
-    next();
 };
 exports.default = globalErrorHandler;

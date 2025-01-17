@@ -17,10 +17,9 @@ const user_service_1 = require("./user.service");
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
-const createUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { user } = req.body;
     const result = yield user_service_1.usersService.createUser(user);
-    next();
     // res.status(201).json({
     //   data: result,
     //   message: 'User created successfully',

@@ -78,13 +78,22 @@ const getSingleSemester = (id) => __awaiter(void 0, void 0, void 0, function* ()
     return result;
 });
 const updateSemester = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    if (payload.title &&
+        payload.code &&
+        academicSemester_constant_1.academicSemesterTitleCodeMapper[payload.title] !== payload.code) {
+        throw new ApiErrors_1.default(http_status_1.default.BAD_REQUEST, 'Invalid Semester Code');
+    }
     const result = yield academicsemister_model_1.AcademicSemester.findByIdAndUpdate({ _id: id }, payload, {
         new: true,
     });
     return result;
 });
+const deleteSemester = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield academicsemister_model_1.AcademicSemester.findByIdAndDelete(id);
+    return result;
+});
 exports.academicSemesterService = {
-    createSemester,
+    createSemester, deleteSemester,
     getallSemesters,
     getSingleSemester,
     updateSemester,
