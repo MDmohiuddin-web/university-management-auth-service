@@ -1,4 +1,4 @@
-import {  model, Schema } from 'mongoose'
+import { model, Schema } from 'mongoose'
 import { IUser, UserModel } from './user.interface'
 
 const userSchema = new Schema<IUser>(
@@ -9,6 +9,9 @@ const userSchema = new Schema<IUser>(
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   },
 )
 export const User = model<IUser, UserModel>('User', userSchema)
