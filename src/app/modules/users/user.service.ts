@@ -4,16 +4,18 @@ import { IUser } from './user.interface'
 import config from '../../../config'
 
 import ApiError from '../../../errors/ApiErrors'
-import { generateStudentId } from './user.utils'
+import { GenerateFacultyId, generateStudentId } from './user.utils'
 import { IAcademicSemester } from '../academicsemister/academicsemister.interface'
 
 const createUser = async (user: IUser): Promise<IUser | null> => {
   // auto inclement the id and default password
-const acadimaicsimister = {
-  year: '2024',
-  code: '10',
+const academicsemister = {
+  year: '2025',
+  code: '01',
 }
-  const id = await generateStudentId(acadimaicsimister as IAcademicSemester)
+  // const id = await generateStudentId(academicsemister as IAcademicSemester)
+  // testing for faculty
+  const id = await GenerateFacultyId()
 
   user.id = id
 

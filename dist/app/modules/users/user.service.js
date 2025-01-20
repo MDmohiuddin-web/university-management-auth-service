@@ -19,11 +19,12 @@ const ApiErrors_1 = __importDefault(require("../../../errors/ApiErrors"));
 const user_utils_1 = require("./user.utils");
 const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     // auto inclement the id and default password
-    const acadimaicsimister = {
-        year: '2024',
-        code: '10',
+    const academicsemister = {
+        year: '2025',
+        code: '01',
     };
-    const id = yield (0, user_utils_1.generateStudentId)(acadimaicsimister);
+    // const id = await generateStudentId(academicsemister as IAcademicSemester)
+    const id = yield (0, user_utils_1.GenerateFacultyId)();
     user.id = id;
     if (!user.password) {
         user.password = config_1.default.default_user_password;

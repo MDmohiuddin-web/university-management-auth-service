@@ -15,6 +15,7 @@ const createUser: RequestHandler = catchAsync(
     //   message: 'User created successfully',
     //   status: true,
     // })
+    // alternative way to send response
     sendResponse<IUser>(res, {
       data: result,
       message: 'User created successfully',

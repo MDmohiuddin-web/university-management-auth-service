@@ -36,6 +36,7 @@ const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
     //   message: 'User created successfully',
     //   status: true,
     // })
+    // alternative way to send response
     (0, sendResponse_1.default)(res, {
         data: result,
         message: 'User created successfully',

@@ -12,10 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GenerateFacultyId = exports.findLastFacultyId = exports.generateStudentId = exports.findLastStudentId = void 0;
 const user_model_1 = require("./user.model");
 const findLastStudentId = () => __awaiter(void 0, void 0, void 0, function* () {
-    const lastStudent = yield user_model_1.User.findOne({}, { id: 1, _id: 0 })
+    const lastStudent = yield user_model_1.User.findOne({ role: 'student' }, { id: 1, _id: 0 })
         .sort({ createdAt: -1 })
         .lean();
-    return lastStudent === null || lastStudent === void 0 ? void 0 : lastStudent.id;
+    return (lastStudent === null || lastStudent === void 0 ? void 0 : lastStudent.id) ? lastStudent.id.substring(4) : undefined;
 });
 exports.findLastStudentId = findLastStudentId;
 const generateStudentId = (academicSemester) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,12 +28,10 @@ const generateStudentId = (academicSemester) => __awaiter(void 0, void 0, void 0
 });
 exports.generateStudentId = generateStudentId;
 const findLastFacultyId = () => __awaiter(void 0, void 0, void 0, function* () {
-    const lastFaculty = yield user_model_1.User.findOne(
-    // { role: 'faculty' },
-    { id: 1, _id: 0 })
+    const lastFaculty = yield user_model_1.User.findOne({ role: 'faculty' }, { id: 1, _id: 0 })
         .sort({ createdAt: -1 })
         .lean();
-    return lastFaculty === null || lastFaculty === void 0 ? void 0 : lastFaculty.id;
+    return (lastFaculty === null || lastFaculty === void 0 ? void 0 : lastFaculty.id) ? lastFaculty.id.substring(2) : undefined;
 });
 exports.findLastFacultyId = findLastFacultyId;
 const GenerateFacultyId = () => __awaiter(void 0, void 0, void 0, function* () {
