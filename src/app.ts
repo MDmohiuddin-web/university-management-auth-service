@@ -7,7 +7,6 @@ import globalErrorHandler from './app/middlewares/globalErrorHnadelar'
 
 import router from './app/routes'
 
-
 const app: Application = express()
 
 app.use(cors())

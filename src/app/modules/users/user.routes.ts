@@ -8,7 +8,11 @@ router.post(
   '/create-user',
   ValidationRequest(UserValidation.createUserZodSchema),
   UserController.createUser,
+
+
 )
+// optional
+router.get('/get-users', UserController.getUsers)
 
 export const userRoutes = router
 

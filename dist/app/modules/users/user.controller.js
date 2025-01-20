@@ -32,6 +32,14 @@ const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         statusCode: http_status_1.default.OK,
     });
 }));
+const getUsers = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield user_service_1.usersService.getUsers();
+    res.status(200).json({
+        data: users,
+        message: 'Users fetched successfully',
+        status: true,
+    });
+}));
 exports.UserController = {
-    createUser,
+    createUser, getUsers
 };

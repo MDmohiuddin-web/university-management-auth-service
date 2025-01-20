@@ -30,6 +30,10 @@ const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     }
     return createdUser;
 });
+const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield user_model_1.User.find();
+    return users;
+});
 exports.usersService = {
-    createUser,
+    createUser, getUsers
 };
