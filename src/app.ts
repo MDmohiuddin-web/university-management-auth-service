@@ -7,6 +7,9 @@ import globalErrorHandler from './app/middlewares/globalErrorHnadelar'
 
 import router from './app/routes'
 
+
+
+
 const app: Application = express()
 
 app.use(cors())
@@ -36,5 +39,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   })
   next()
 })
+
+
+// const test = async () => {
+//   const testId = await GenerateFacultyId()
+//   console.log('testId', testId)
+// }
+
+// test()
 
 export default app

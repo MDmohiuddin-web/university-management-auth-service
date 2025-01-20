@@ -7,8 +7,8 @@ import { IUser } from './user.interface'
 
 const createUser: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const { user } = req.body
-    const result = await usersService.createUser(user)
+    const { ...userData } = req.body
+    const result = await usersService.createUser(userData)
    
     // res.status(201).json({
     //   data: result,
