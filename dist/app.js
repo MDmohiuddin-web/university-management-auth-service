@@ -33,4 +33,9 @@ app.use((req, res, next) => {
     });
     next();
 });
+// const test = async () => {
+//   const testId = await GenerateFacultyId()
+//   console.log('testId', testId)
+// }
+// test()
 exports.default = app;

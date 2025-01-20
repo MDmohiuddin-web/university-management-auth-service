@@ -3,18 +3,19 @@ import { usersService } from './user.service'
 import catchAsync from '../../../shared/catchAsync'
 import sendResponse from '../../../shared/sendResponse'
 import httpStatus from 'http-status'
+import { IUser } from './user.interface'
 
 const createUser: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const { user } = req.body
-    const result = await usersService.createUser(user)
+    const { ...userData } = req.body
+    const result = await usersService.createUser(userData)
    
     // res.status(201).json({
     //   data: result,
     //   message: 'User created successfully',
     //   status: true,
     // })
-    sendResponse(res, {
+    sendResponse<IUser>(res, {
       data: result,
       message: 'User created successfully',
       success: true,
@@ -22,7 +23,19 @@ const createUser: RequestHandler = catchAsync(
     })
   },
 )
+const getUsers: RequestHandler = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const users = await usersService.getUsers()
+    res.status(200).json({
+      data: users,
+      message: 'Users fetched successfully',
+      status: true,
+    })
+  },
+)
+
+
 
 export const UserController = {
-  createUser,
+  createUser,getUsers
 }

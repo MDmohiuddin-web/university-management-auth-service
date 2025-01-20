@@ -15,11 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.usersService = void 0;
 const user_model_1 = require("./user.model");
 const config_1 = __importDefault(require("../../../config"));
-const user_utils_1 = require("./user.utils");
 const ApiErrors_1 = __importDefault(require("../../../errors/ApiErrors"));
+const user_utils_1 = require("./user.utils");
 const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     // auto inclement the id and default password
-    const id = yield (0, user_utils_1.generateUserId)();
+    const acadimaicsimister = {
+        year: '2024',
+        code: '10',
+    };
+    const id = yield (0, user_utils_1.generateStudentId)(acadimaicsimister);
     user.id = id;
     if (!user.password) {
         user.password = config_1.default.default_user_password;
@@ -30,6 +34,10 @@ const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     }
     return createdUser;
 });
+const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield user_model_1.User.find();
+    return users;
+});
 exports.usersService = {
-    createUser,
+    createUser, getUsers
 };

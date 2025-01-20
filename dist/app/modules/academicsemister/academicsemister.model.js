@@ -25,6 +25,9 @@ const AcademicSemesterSchema = new mongoose_1.Schema({
     endMonth: { type: String, required: true, enum: academicSemester_constant_1.academicSemesterMonths },
 }, {
     timestamps: true,
+    toJSON: {
+        virtuals: true,
+    },
 });
 AcademicSemesterSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
