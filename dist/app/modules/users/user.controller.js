@@ -28,9 +28,9 @@ const user_service_1 = require("./user.service");
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
-const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const userData = __rest(req.body, []);
-    const result = yield user_service_1.usersService.createUser(userData);
+const createStudent = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const _a = req.body, { student } = _a, userData = __rest(_a, ["student"]);
+    const result = yield user_service_1.usersService.createStudent(student, userData);
     // res.status(201).json({
     //   data: result,
     //   message: 'User created successfully',
@@ -53,5 +53,5 @@ const getUsers = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0,
     });
 }));
 exports.UserController = {
-    createUser, getUsers
+    createStudent, getUsers
 };

@@ -9,7 +9,12 @@ const user_controller_1 = require("./user.controller");
 const user_validation_1 = require("./user.validation");
 const ValidationRequest_1 = __importDefault(require("../../middlewares/ValidationRequest"));
 const router = express_1.default.Router();
-router.post('/create-user', (0, ValidationRequest_1.default)(user_validation_1.UserValidation.createUserZodSchema), user_controller_1.UserController.createUser);
+// router.post(
+//   '/create-user',
+//   ValidationRequest(UserValidation.createUserZodSchema),
+//   UserController.createUser,
+// )
+router.post('/create-student', (0, ValidationRequest_1.default)(user_validation_1.UserValidation.createUserZodSchema), user_controller_1.UserController.createStudent);
 // optional
 router.get('/get-users', user_controller_1.UserController.getUsers);
 exports.userRoutes = router;

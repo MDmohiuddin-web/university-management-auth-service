@@ -42,11 +42,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 })
 
 // test the GenerateFacultyId function
-const test = async () => {
-  const testId = await GenerateFacultyId()
-  console.log('testId', testId)
-}
+// const test = async () => {
+//   const testId = await GenerateFacultyId()
+//   console.log('testId', testId)
+// }
 
-test()
+// test()
 
 export default app
