@@ -43,6 +43,7 @@ app.use((req, res, next) => {
     });
     next();
 });
+// test the GenerateFacultyId function
 const test = () => __awaiter(void 0, void 0, void 0, function* () {
     const testId = yield (0, user_utils_1.GenerateFacultyId)();
     console.log('testId', testId);

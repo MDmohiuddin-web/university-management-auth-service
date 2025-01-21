@@ -9,7 +9,7 @@ import { IAcademicSemester } from './academicsemister.interface'
 import { academicSemesterFilterableFinds } from './academicSemester.constant'
 
 const createSemester = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response) => {
     const { ...academicSemesterData } = req.body
     const result =
       await academicSemesterService.createSemester(academicSemesterData)
@@ -19,7 +19,7 @@ const createSemester = catchAsync(
       statusCode: httpStatus.OK,
       data: result,
     })
-    next()
+    
   },
 )
 

@@ -24,6 +24,7 @@ const createUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
         code: '01',
     };
     // const id = await generateStudentId(academicsemister as IAcademicSemester)
+    // testing for faculty
     const id = yield (0, user_utils_1.GenerateFacultyId)();
     user.id = id;
     if (!user.password) {
