@@ -12,52 +12,54 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.usersService = void 0;
+exports.UserService = void 0;
 const http_status_1 = __importDefault(require("http-status"));
-const user_model_1 = require("./user.model");
-const config_1 = __importDefault(require("../../../config"));
-const ApiErrors_1 = __importDefault(require("../../../errors/ApiErrors"));
-const academicsemister_model_1 = require("../academicsemister/academicsemister.model");
-const user_utils_1 = require("./user.utils");
 const mongoose_1 = __importDefault(require("mongoose"));
+const index_1 = __importDefault(require("../../../config/index"));
 const student_model_1 = require("../student/student.model");
+const user_model_1 = require("./user.model");
+const user_utils_1 = require("./user.utils");
+const academicsemister_model_1 = require("../academicsemister/academicsemister.model");
+const ApiErrors_1 = __importDefault(require("../../../errors/ApiErrors"));
 const createStudent = (student, user) => __awaiter(void 0, void 0, void 0, function* () {
+    // If password is not given,set default password
     if (!user.password) {
-        user.password = config_1.default.default_student_pass;
+        user.password = index_1.default.default_student_pass;
     }
+    // set role
     user.role = 'student';
-    const academicSemester = yield academicsemister_model_1.AcademicSemester.findById(student.academicSemester);
-    if (!academicSemester) {
-        throw new ApiErrors_1.default(http_status_1.default.BAD_REQUEST, 'Academic semester not found');
-    }
+    const academicsemester = yield academicsemister_model_1.AcademicSemester.findById(student.academicSemester).lean();
     let newUserAllData = null;
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
-        const id = yield (0, user_utils_1.generateStudentId)(academicSemester);
+        // generate student id
+        const id = yield (0, user_utils_1.generateStudentId)(academicsemester);
+        // set custom id into both  student & user
         user.id = id;
         student.id = id;
-        const createdStudent = yield student_model_1.Student.create([student], { session });
-        if (!createdStudent.length) {
+        // Create student using sesssin
+        const newStudent = yield student_model_1.Student.create([student], { session });
+        if (!newStudent.length) {
             throw new ApiErrors_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create student');
         }
-        user.student = createdStudent[0]._id;
+        // set student _id (reference) into user.student
+        user.student = newStudent[0]._id;
         const newUser = yield user_model_1.User.create([user], { session });
         if (!newUser.length) {
             throw new ApiErrors_1.default(http_status_1.default.BAD_REQUEST, 'Failed to create user');
         }
         newUserAllData = newUser[0];
         yield session.commitTransaction();
-        session.endSession();
+        yield session.endSession();
     }
     catch (error) {
         yield session.abortTransaction();
-        session.endSession();
+        yield session.endSession();
         throw error;
     }
-    // user => user.student => student=> academicSemester,academic faculty,academicDepartment
     if (newUserAllData) {
-        newUserAllData = yield user_model_1.User.findOne({ id: newUserAllData._id }).populate({
+        newUserAllData = yield user_model_1.User.findOne({ id: newUserAllData.id }).populate({
             path: 'student',
             populate: [
                 {
@@ -72,13 +74,116 @@ const createStudent = (student, user) => __awaiter(void 0, void 0, void 0, funct
             ],
         });
     }
+    // if (newUserAllData) {
+    //   await RedisClient.publish(EVENT_STUDENT_CREATED, JSON.stringify(newUserAllData.student))
+    // }
     return newUserAllData;
 });
-const getUsers = () => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_model_1.User.find();
-    return users;
-});
-exports.usersService = {
+// const createFaculty = async (
+//   faculty: IFaculty,
+//   user: IUser
+// ): Promise<IUser | null> => {
+//   // If password is not given,set default password
+//   if (!user.password) {
+//     user.password = config.default_faculty_pass as string;
+//   }
+//   // set role
+//   user.role = 'faculty';
+//   let newUserAllData = null;
+//   const session = await mongoose.startSession();
+//   try {
+//     session.startTransaction();
+//     // generate faculty id
+//     const id = await generateFacultyId();
+//     // set custom id into both  faculty & user
+//     user.id = id;
+//     faculty.id = id;
+//     // Create faculty using sesssin
+//     const newFaculty = await Faculty.create([faculty], { session });
+//     if (!newFaculty.length) {
+//       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create faculty ');
+//     }
+//     // set faculty _id (reference) into user.student
+//     user.faculty = newFaculty[0]._id;
+//     const newUser = await User.create([user], { session });
+//     if (!newUser.length) {
+//       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create faculty');
+//     }
+//     newUserAllData = newUser[0];
+//     await session.commitTransaction();
+//     await session.endSession();
+//   } catch (error) {
+//     await session.abortTransaction();
+//     await session.endSession();
+//     throw error;
+//   }
+//   if (newUserAllData) {
+//     newUserAllData = await User.findOne({ id: newUserAllData.id }).populate({
+//       path: 'faculty',
+//       populate: [
+//         {
+//           path: 'academicDepartment',
+//         },
+//         {
+//           path: 'academicFaculty',
+//         },
+//       ],
+//     });
+//   };
+//   if (newUserAllData) {
+//     await RedisClient.publish(EVENT_FACULTY_CREATED, JSON.stringify(newUserAllData.faculty));
+//   }
+//   return newUserAllData;
+// };
+// const createAdmin = async (
+//   admin: IAdmin,
+//   user: IUser
+// ): Promise<IUser | null> => {
+//   // If password is not given,set default password
+//   if (!user.password) {
+//     user.password = config.default_admin_pass as string;
+//   }
+//   // set role
+//   user.role = 'admin';
+//   let newUserAllData = null;
+//   const session = await mongoose.startSession();
+//   try {
+//     session.startTransaction();
+//     // generate admin id
+//     const id = await generateAdminId();
+//     user.id = id;
+//     admin.id = id;
+//     const newAdmin = await Admin.create([admin], { session });
+//     if (!newAdmin.length) {
+//       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create faculty ');
+//     }
+//     user.admin = newAdmin[0]._id;
+//     const newUser = await User.create([user], { session });
+//     if (!newUser.length) {
+//       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create admin');
+//     }
+//     newUserAllData = newUser[0];
+//     await session.commitTransaction();
+//     await session.endSession();
+//   } catch (error) {
+//     await session.abortTransaction();
+//     await session.endSession();
+//     throw error;
+//   }
+//   if (newUserAllData) {
+//     newUserAllData = await User.findOne({ id: newUserAllData.id }).populate({
+//       path: 'admin',
+//       populate: [
+//         {
+//           path: 'managementDepartment',
+//         },
+//       ],
+//     });
+//   }
+//   return newUserAllData;
+// };
+exports.UserService = {
     createStudent,
-    getUsers,
+    // createFaculty,
+    // createAdmin,
 };

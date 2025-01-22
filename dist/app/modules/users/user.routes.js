@@ -15,6 +15,4 @@ const router = express_1.default.Router();
 //   UserController.createUser,
 // )
 router.post('/create-student', (0, ValidationRequest_1.default)(user_validation_1.UserValidation.createUserZodSchema), user_controller_1.UserController.createStudent);
-// optional
-router.get('/get-users', user_controller_1.UserController.getUsers);
 exports.userRoutes = router;

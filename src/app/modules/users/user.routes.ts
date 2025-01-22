@@ -17,8 +17,7 @@ router.post(
   UserController.createStudent
  
 );
-// optional
-router.get('/get-users', UserController.getUsers)
+
 
 export const userRoutes = router
 

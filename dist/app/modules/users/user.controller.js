@@ -24,19 +24,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
-const user_service_1 = require("./user.service");
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
+const user_service_1 = require("./user.service");
 const createStudent = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const _a = req.body, { student } = _a, userData = __rest(_a, ["student"]);
-    const result = yield user_service_1.usersService.createStudent(student, userData);
-    // res.status(201).json({
-    //   data: result,
-    //   message: 'User created successfully',
-    //   status: true,
-    // })
-    // alternative way to send response
+    const result = yield user_service_1.UserService.createStudent(student, userData);
     (0, sendResponse_1.default)(res, {
         data: result,
         message: 'User created successfully',
@@ -44,14 +38,6 @@ const createStudent = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         statusCode: http_status_1.default.OK,
     });
 }));
-const getUsers = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_service_1.usersService.getUsers();
-    res.status(200).json({
-        data: users,
-        message: 'Users fetched successfully',
-        status: true,
-    });
-}));
 exports.UserController = {
-    createStudent, getUsers
+    createStudent
 };
