@@ -6,21 +6,6 @@
     "auditLog": "P:\\level-2\\university-management-auth-service\\logs\\winston\\successes\\.0fcddcd7fa778af9152371d1cf8c2ca6956a5b4b-audit.json",
     "files": [
         {
-            "date": 1736348065959,
-            "name": "P:\\level-2\\university-management-auth-service\\logs\\winston\\successes\\2025-01-08-20-success.log",
-            "hash": "f0bbb90816b1b35e21a6e194b8ddbe377c309878bbb91c5624b185025b0d22cd"
-        },
-        {
-            "date": 1736348887064,
-            "name": "P:\\level-2\\university-management-auth-service\\logs\\winston\\successes\\2025-01-08-21-success.log",
-            "hash": "62cc44dce7c0934eafe992a1bb4b4a68ed492343f40e12e1bb8911247794ae9a"
-        },
-        {
-            "date": 1736352080360,
-            "name": "P:\\level-2\\university-management-auth-service\\logs\\winston\\successes\\2025-01-08-22-success.log",
-            "hash": "eb6b7a7cbf7df25a9ddb85e495241e5e51efb9c504d2ae592c56dc64cf654529"
-        },
-        {
             "date": 1736357402844,
             "name": "P:\\level-2\\university-management-auth-service\\logs\\winston\\successes\\2025-01-08-23-success.log",
             "hash": "b6a11bf868edc3a16034b3293e87de899229cb0258586d3d66c44aba02125653"
@@ -124,6 +109,16 @@
             "date": 1737487075589,
             "name": "P:\\level-2\\university-management-auth-service\\logs\\winston\\successes\\2025-01-22-01-success.log",
             "hash": "ab5b767f604cbf68621a5adb96820c160300378c7a76e3530e369565bf015aff"
+        },
+        {
+            "date": 1737561552531,
+            "name": "P:\\level-2\\university-management-auth-service\\logs\\winston\\successes\\2025-01-22-21-success.log",
+            "hash": "cd6ebefbc534437421c6fa0b23c1f4e1cfb64285378c6e899fd8bb1ae4b5d468"
+        },
+        {
+            "date": 1737563623960,
+            "name": "P:\\level-2\\university-management-auth-service\\logs\\winston\\successes\\2025-01-22-22-success.log",
+            "hash": "6bd503aa58b2dbf5b490518168f265f5b0eaabe00251980020ccaac6b7d20fd3"
         }
     ],
     "hashType": "sha256"
