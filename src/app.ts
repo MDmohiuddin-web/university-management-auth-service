@@ -6,10 +6,6 @@ import cors from 'cors'
 import globalErrorHandler from './app/middlewares/globalErrorHnadelar'
 
 import router from './app/routes'
-import { GenerateFacultyId } from './app/modules/users/user.utils'
-
-
-
 
 const app: Application = express()
 

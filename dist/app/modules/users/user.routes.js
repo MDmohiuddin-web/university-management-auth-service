@@ -14,5 +14,14 @@ const router = express_1.default.Router();
 //   ValidationRequest(UserValidation.createUserZodSchema),
 //   UserController.createUser,
 // )
-router.post('/create-student', (0, ValidationRequest_1.default)(user_validation_1.UserValidation.createUserZodSchema), user_controller_1.UserController.createStudent);
+router.post('/create-student', (0, ValidationRequest_1.default)(user_validation_1.UserValidation.createStudentZodSchema), user_controller_1.UserController.createStudent);
+router.post('/create-faculty', (0, ValidationRequest_1.default)(user_validation_1.UserValidation.createFacultyZodSchema), 
+// auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+user_controller_1.UserController.createFaculy);
+// router.post(
+//   '/create-admin',
+//   ValidationRequest(UserValidation.createAdminZodSchema),
+//   // auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+//   UserController.createAdmin
+// );
 exports.userRoutes = router;

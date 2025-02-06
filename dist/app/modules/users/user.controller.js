@@ -24,20 +24,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
+const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
-const http_status_1 = __importDefault(require("http-status"));
 const user_service_1 = require("./user.service");
 const createStudent = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const _a = req.body, { student } = _a, userData = __rest(_a, ["student"]);
     const result = yield user_service_1.UserService.createStudent(student, userData);
     (0, sendResponse_1.default)(res, {
-        data: result,
-        message: 'User created successfully',
-        success: true,
         statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Student created successfully!',
+        data: result,
     });
 }));
+const createFaculy = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const _a = req.body, { faculty } = _a, userData = __rest(_a, ["faculty"]);
+    const result = yield user_service_1.UserService.createFaculty(faculty, userData);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Faculty created successfully!',
+        data: result,
+    });
+}));
+// const createAdmin: RequestHandler = catchAsync(
+//   async (req: Request, res: Response) => {
+//     const { admin, ...userData } = req.body;
+//     const result = await UserService.createAdmin(admin, userData);
+//     sendResponse<IUser>(res, {
+//       statusCode: httpStatus.OK,
+//       success: true,
+//       message: 'Admin created successfully!',
+//       data: result,
+//     });
+//   }
+// );
 exports.UserController = {
-    createStudent
+    createStudent,
+    createFaculy,
+    // createAdmin,
 };

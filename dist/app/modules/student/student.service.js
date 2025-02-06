@@ -47,7 +47,7 @@ const getAllStudents = (filters, paginationOptions) => __awaiter(void 0, void 0,
             })),
         });
     }
-    // Filters needs $and to fullfill all the conditions
+    // Filters needs $and to full fill all the conditions
     if (Object.keys(filtersData).length) {
         andConditions.push({
             $and: Object.entries(filtersData).map(([field, value]) => ({
