@@ -3,6 +3,7 @@ import httpStatus from 'http-status'
 import ApiError from '../../../errors/ApiErrors'
 import { User } from '../users/user.model'
 import { ILoginUser } from './auth.interface'
+import jwt from 'jsonwebtoken'
 
 const loginUser = async (payload: ILoginUser) => {
   const { id, password } = payload
@@ -20,6 +21,17 @@ const loginUser = async (payload: ILoginUser) => {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Password is incorrect')
   }
   // create token
+
+  const accessToken = jwt.sign(
+    { id: isUserExist?.id, role: isUserExist?.role },
+    process.env.JWT_SECRET as string,
+    { expiresIn: process.env.JWT_EXPIRES_IN as string }
+  )
+
+  return {
+    accessToken
+  }
+
 }
 
 // const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
