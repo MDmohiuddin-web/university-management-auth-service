@@ -16,6 +16,8 @@ exports.AuthService = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const ApiErrors_1 = __importDefault(require("../../../errors/ApiErrors"));
 const user_model_1 = require("../users/user.model");
+const jwtHelpers_1 = require("../../../helpes/jwtHelpers");
+const config_1 = __importDefault(require("../../../config"));
 const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { id, password } = payload;
     const isUserExist = yield user_model_1.User.isUserExist(id);
@@ -23,43 +25,45 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         throw new ApiErrors_1.default(http_status_1.default.NOT_FOUND, 'User does not exist');
     }
     if (isUserExist.password &&
-        !(yield user_model_1.User.isPasswordMatched(password, isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.password))) {
+        !(yield user_model_1.User.isPasswordMatched(password, isUserExist.password))) {
         throw new ApiErrors_1.default(http_status_1.default.UNAUTHORIZED, 'Password is incorrect');
     }
-    // create token
+    //create access token & refresh token
+    const { id: userId, role, needsPasswordChange } = isUserExist;
+    const accessToken = jwtHelpers_1.jwtHelpers.createToken({ userId, role }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
+    const refreshToken = jwtHelpers_1.jwtHelpers.createToken({ userId, role }, config_1.default.jwt.refresh_secret, config_1.default.jwt.refresh_expires_in);
+    return {
+        accessToken,
+        refreshToken,
+        needsPasswordChange,
+    };
 });
-// const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
-//   //verify token
-//   // invalid token - synchronous
-//   let verifiedToken = null;
-//   try {
-//     verifiedToken = jwtHelpers.verifyToken(
-//       token,
-//       config.jwt.refresh_secret as Secret
-//     );
-//   } catch (err) {
-//     throw new ApiError(httpStatus.FORBIDDEN, 'Invalid Refresh Token');
-//   }
-//   const { userId } = verifiedToken;
-//   // tumi delete hye gso  kintu tumar refresh token ase
-//   // checking deleted user's refresh token
-//   const isUserExist = await User.isUserExist(userId);
-//   if (!isUserExist) {
-//     throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
-//   }
-//   //generate new token
-//   const newAccessToken = jwtHelpers.createToken(
-//     {
-//       id: isUserExist.id,
-//       role: isUserExist.role,
-//     },
-//     config.jwt.secret as Secret,
-//     config.jwt.expires_in as string
-//   );
-//   return {
-//     accessToken: newAccessToken,
-//   };
-// };
+const refreshToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    //verify token
+    // invalid token - synchronous
+    let verifiedToken = null;
+    try {
+        verifiedToken = jwtHelpers_1.jwtHelpers.verifyToken(token, config_1.default.jwt.refresh_secret);
+    }
+    catch (err) {
+        throw new ApiErrors_1.default(http_status_1.default.FORBIDDEN, 'Invalid Refresh Token');
+    }
+    const { userId } = verifiedToken;
+    // tumi delete hye gso  kintu tumar refresh token ase
+    // checking deleted user's refresh token
+    const isUserExist = yield user_model_1.User.isUserExist(userId);
+    if (!isUserExist) {
+        throw new ApiErrors_1.default(http_status_1.default.NOT_FOUND, 'User does not exist');
+    }
+    //generate new token
+    const newAccessToken = jwtHelpers_1.jwtHelpers.createToken({
+        id: isUserExist.id,
+        role: isUserExist.role,
+    }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
+    return {
+        accessToken: newAccessToken,
+    };
+});
 // const changePassword = async (
 //   user: JwtPayload | null,
 //   payload: IChangePassword
@@ -146,7 +150,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
 // }
 exports.AuthService = {
     loginUser,
-    // refreshToken,
+    refreshToken,
     // changePassword,
     // forgotPass,
     // resetPassword

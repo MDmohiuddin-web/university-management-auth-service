@@ -24,23 +24,73 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
-const http_status_1 = __importDefault(require("http-status"));
+const config_1 = __importDefault(require("../../../config"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
-const auth_service_1 = require("./auth.service");
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
+const auth_service_1 = require("./auth.service");
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const loginData = __rest(req.body, []);
     const result = yield auth_service_1.AuthService.loginUser(loginData);
+    const { refreshToken } = result;
+    // set refresh token into cookie
+    const cookieOptions = {
+        secure: config_1.default.env === 'production',
+        httpOnly: true,
+    };
+    res.cookie('refreshToken', refreshToken, cookieOptions);
     (0, sendResponse_1.default)(res, {
-        statusCode: http_status_1.default.OK,
-        message: 'User logged in successfully',
+        statusCode: 200,
         success: true,
-        data: result
+        message: 'User logged in successfully !',
+        data: result,
     });
 }));
+const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { refreshToken } = req.cookies;
+    const result = yield auth_service_1.AuthService.refreshToken(refreshToken);
+    // set refresh token into cookie
+    const cookieOptions = {
+        secure: config_1.default.env === 'production',
+        httpOnly: true,
+    };
+    res.cookie('refreshToken', refreshToken, cookieOptions);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: 'User logged in successfully !',
+        data: result,
+    });
+}));
+// const changePassword = catchAsync(async (req: Request, res: Response) => {
+//   const user = req.user;
+//   const { ...passwordData } = req.body;
+//   await AuthService.changePassword(user, passwordData);
+//   sendResponse(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: 'Password changed successfully !',
+//   });
+// });
+// const forgotPass = catchAsync(async (req: Request, res: Response) => {
+//   await AuthService.forgotPass(req.body);
+//   sendResponse(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: "Check your email!",
+//   });
+// });
+// const resetPassword = catchAsync(async (req: Request, res: Response) => {
+//   const token = req.headers.authorization || "";
+//   await AuthService.resetPassword(req.body, token);
+//   sendResponse(res, {
+//     statusCode: 200,
+//     success: true,
+//     message: "Account recovered!",
+//   });
+// });
 exports.AuthController = {
     loginUser,
-    // refreshToken,
+    refreshToken,
     // changePassword,
     // forgotPass,
     // resetPassword

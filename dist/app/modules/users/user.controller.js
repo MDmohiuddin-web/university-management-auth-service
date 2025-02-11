@@ -31,6 +31,7 @@ const user_service_1 = require("./user.service");
 const createStudent = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const _a = req.body, { student } = _a, userData = __rest(_a, ["student"]);
     const result = yield user_service_1.UserService.createStudent(student, userData);
+    console.log(req.cookies, 'cookies');
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
