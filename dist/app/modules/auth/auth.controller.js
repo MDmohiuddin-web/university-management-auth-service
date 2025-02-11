@@ -31,7 +31,9 @@ const auth_service_1 = require("./auth.service");
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const loginData = __rest(req.body, []);
     const result = yield auth_service_1.AuthService.loginUser(loginData);
-    const { refreshToken } = result, others = __rest(result, ["refreshToken"]);
+    const { refreshToken } = result, others = __rest(result
+    // set refresh token into cookie
+    , ["refreshToken"]);
     // set refresh token into cookie
     const cookieOptions = {
         secure: config_1.default.env === 'production',
@@ -39,14 +41,14 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     };
     res.cookie('refreshToken', refreshToken, cookieOptions);
     // delete refresh token from response
-    if ("refreshToken" in result) {
+    if ('refreshToken' in result) {
         delete result.refreshToken;
     }
     (0, sendResponse_1.default)(res, {
         statusCode: 200,
         success: true,
         message: 'User logged in successfully !',
-        data: others
+        data: others,
     });
 }));
 const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

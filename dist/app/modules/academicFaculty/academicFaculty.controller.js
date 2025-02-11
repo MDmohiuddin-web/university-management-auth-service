@@ -42,6 +42,8 @@ const createAcademicFaculty = (0, catchAsync_1.default)((req, res) => __awaiter(
     });
 }));
 const getAllAcademicFaculty = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // console.log(res.header.authorization);
+    console.log(req.user);
     const filters = (0, pick_1.default)(req.query, academicFaculty_conostants_1.academicFacultyFilterableFields);
     const PaginationOptions = (0, pick_1.default)(req.query, pagenation_1.paginationFields);
     const result = yield academicFaculty_service_1.academicFacultyService.getAllAcademicFaculty(filters, PaginationOptions);
