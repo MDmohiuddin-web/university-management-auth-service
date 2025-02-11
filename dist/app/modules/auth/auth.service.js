@@ -49,7 +49,7 @@ const refreshToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
         throw new ApiErrors_1.default(http_status_1.default.FORBIDDEN, 'Invalid Refresh Token');
     }
     const { userId } = verifiedToken;
-    // tumi delete hye gso  kintu tumar refresh token ase
+    // tami delete hye gso  kintu tumar refresh token ase
     // checking deleted user's refresh token
     const isUserExist = yield user_model_1.User.isUserExist(userId);
     if (!isUserExist) {
