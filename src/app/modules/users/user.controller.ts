@@ -1,41 +1,56 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express'
-import { usersService } from './user.service'
-import catchAsync from '../../../shared/catchAsync'
-import sendResponse from '../../../shared/sendResponse'
-import httpStatus from 'http-status'
-import { IUser } from './user.interface'
+import { Request, Response } from 'express';
+import { RequestHandler } from 'express-serve-static-core';
+import httpStatus from 'http-status';
+import catchAsync from '../../../shared/catchAsync';
+import sendResponse from '../../../shared/sendResponse';
+import { IUser } from './user.interface';
+import { UserService } from './user.service';
 
-const createUser: RequestHandler = catchAsync(
+const createStudent: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-    const { ...userData } = req.body
-    const result = await usersService.createUser(userData)
-   
-    // res.status(201).json({
-    //   data: result,
-    //   message: 'User created successfully',
-    //   status: true,
-    // })
+    const { student, ...userData } = req.body;
+    const result = await UserService.createStudent(student, userData);
+    // console.log(req.cookies, 'cookies');
+
     sendResponse<IUser>(res, {
-      data: result,
-      message: 'User created successfully',
-      success: true,
       statusCode: httpStatus.OK,
-    })
-  },
-)
-const getUsers: RequestHandler = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const users = await usersService.getUsers()
-    res.status(200).json({
-      data: users,
-      message: 'Users fetched successfully',
-      status: true,
-    })
-  },
-)
+      success: true,
+      message: 'Student created successfully!',
+      data: result,
+    });
+  }
+);
 
+const createFaculy: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const { faculty, ...userData } = req.body;
+    const result = await UserService.createFaculty(faculty, userData);
 
+    sendResponse<IUser>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Faculty created successfully!',
+      data: result,
+    });
+  }
+);
+
+// const createAdmin: RequestHandler = catchAsync(
+//   async (req: Request, res: Response) => {
+//     const { admin, ...userData } = req.body;
+//     const result = await UserService.createAdmin(admin, userData);
+
+//     sendResponse<IUser>(res, {
+//       statusCode: httpStatus.OK,
+//       success: true,
+//       message: 'Admin created successfully!',
+//       data: result,
+//     });
+//   }
+// );
 
 export const UserController = {
-  createUser,getUsers
-}
+  createStudent,
+  createFaculy,
+  // createAdmin,
+};

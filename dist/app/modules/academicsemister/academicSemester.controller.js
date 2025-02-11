@@ -31,7 +31,7 @@ const http_status_1 = __importDefault(require("http-status"));
 const pick_1 = __importDefault(require("../../../shared/pick"));
 const pagenation_1 = require("../../../conostants/pagenation");
 const academicSemester_constant_1 = require("./academicSemester.constant");
-const createSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const createSemester = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const academicSemesterData = __rest(req.body, []);
     const result = yield academicsemister_service_1.academicSemesterService.createSemester(academicSemesterData);
     (0, sendResponse_1.default)(res, {
@@ -40,7 +40,6 @@ const createSemester = (0, catchAsync_1.default)((req, res, next) => __awaiter(v
         statusCode: http_status_1.default.OK,
         data: result,
     });
-    next();
 }));
 const getAllSemesters = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const filters = Object.assign({ searchTerm: '' }, (0, pick_1.default)(req.query, academicSemester_constant_1.academicSemesterFilterableFinds));

@@ -8,6 +8,8 @@ const user_routes_1 = require("../modules/users/user.routes");
 const academicSemester_routes_1 = require("../modules/academicsemister/academicSemester.routes");
 const academicFaculty_routes_1 = require("../modules/academicFaculty/academicFaculty.routes");
 const academicDepartment_routes_1 = require("../modules/academicDepartment/academicDepartment.routes");
+const student_routes_1 = require("../modules/student/student.routes");
+const auth_routes_1 = require("../modules/auth/auth.routes");
 const router = express_1.default.Router();
 const modulesRoutes = [
     {
@@ -17,14 +19,23 @@ const modulesRoutes = [
     {
         path: '/academic-semesters',
         route: academicSemester_routes_1.AcademicSemesterRoutes,
-    }, {
-        path: "/academic-faculty",
-        route: academicFaculty_routes_1.academicDepartmentFacultyRoutes
     },
     {
-        path: "/academic-department",
-        route: academicDepartment_routes_1.AcademicDepartmentRoutes
-    }
+        path: '/academic-faculty',
+        route: academicFaculty_routes_1.academicDepartmentFacultyRoutes,
+    },
+    {
+        path: '/academic-department',
+        route: academicDepartment_routes_1.AcademicDepartmentRoutes,
+    },
+    {
+        path: '/students',
+        route: student_routes_1.StudentRoutes,
+    },
+    {
+        path: '/auth',
+        route: auth_routes_1.AuthRoutes,
+    },
 ];
 // router.use('/users/', userRoutes)
 // router.use('/academic-semesters/', convertYearToNumber,AcademicSemesterRoutes)

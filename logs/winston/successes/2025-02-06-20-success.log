@@ -1,0 +1,12 @@
+{
+  message: '✌️ Data base connected success fully ✌️',
+  level: 'info',
+  label: 'right now!',
+  timestamp: '2025-02-06T14:30:08.294Z'
+}
+{
+  message: '⛳ Server is running on PORT 7000 ⛳',
+  level: 'info',
+  label: 'right now!',
+  timestamp: '2025-02-06T14:30:08.299Z'
+}
