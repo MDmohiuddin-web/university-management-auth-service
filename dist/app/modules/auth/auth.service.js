@@ -71,6 +71,7 @@ const changePassword = (user, payload) => __awaiter(void 0, void 0, void 0, func
     // const isUserExist = await User.isUserExist(user?.userId);
     //alternative way
     const isUserExist = yield user_model_1.User.findOne({ id: user === null || user === void 0 ? void 0 : user.userId }).select('+password');
+    console.log('isUserExist', isUserExist);
     if (!isUserExist) {
         throw new ApiErrors_1.default(http_status_1.default.NOT_FOUND, 'User does not exist');
     }
