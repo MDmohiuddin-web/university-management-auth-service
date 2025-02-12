@@ -24,6 +24,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
+const http_status_1 = __importDefault(require("http-status"));
 const config_1 = __importDefault(require("../../../config"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
@@ -45,7 +46,7 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         delete result.refreshToken;
     }
     (0, sendResponse_1.default)(res, {
-        statusCode: 200,
+        statusCode: http_status_1.default.OK,
         success: true,
         message: 'User logged in successfully !',
         data: others,
@@ -61,22 +62,23 @@ const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
     };
     res.cookie('refreshToken', refreshToken, cookieOptions);
     (0, sendResponse_1.default)(res, {
-        statusCode: 200,
+        statusCode: http_status_1.default.OK,
         success: true,
         message: 'User logged in successfully !',
         data: result,
     });
 }));
-// const changePassword = catchAsync(async (req: Request, res: Response) => {
-//   const user = req.user;
-//   const { ...passwordData } = req.body;
-//   await AuthService.changePassword(user, passwordData);
-//   sendResponse(res, {
-//     statusCode: 200,
-//     success: true,
-//     message: 'Password changed successfully !',
-//   });
-// });
+const changePassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = req.user;
+    const passwordData = __rest(req.body, []);
+    const result = yield auth_service_1.AuthService.changePassword(user, passwordData);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Password changed successfully !',
+        data: result,
+    });
+}));
 // const forgotPass = catchAsync(async (req: Request, res: Response) => {
 //   await AuthService.forgotPass(req.body);
 //   sendResponse(res, {
@@ -97,7 +99,7 @@ const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 exports.AuthController = {
     loginUser,
     refreshToken,
-    // changePassword,
+    changePassword,
     // forgotPass,
     // resetPassword
 };

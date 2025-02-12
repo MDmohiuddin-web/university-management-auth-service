@@ -1,3 +1,4 @@
+import httpStatus from 'http-status'
 import { Request, Response } from 'express'
 import config from '../../../config'
 import catchAsync from '../../../shared/catchAsync'
@@ -23,7 +24,7 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
   }
 
   sendResponse<ILoginUserResponse>(res, {
-    statusCode: 200,
+    statusCode: httpStatus.OK,
     success: true,
     message: 'User logged in successfully !',
     data: others,
@@ -44,25 +45,27 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   res.cookie('refreshToken', refreshToken, cookieOptions)
 
   sendResponse<IRefreshTokenResponse>(res, {
-    statusCode: 200,
+    statusCode: httpStatus.OK,
     success: true,
     message: 'User logged in successfully !',
     data: result,
   })
 })
 
-// const changePassword = catchAsync(async (req: Request, res: Response) => {
-//   const user = req.user;
-//   const { ...passwordData } = req.body;
+const changePassword = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user
 
-//   await AuthService.changePassword(user, passwordData);
+  const { ...passwordData } = req.body
 
-//   sendResponse(res, {
-//     statusCode: 200,
-//     success: true,
-//     message: 'Password changed successfully !',
-//   });
-// });
+  const result = await AuthService.changePassword(user, passwordData)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password changed successfully !',
+    data: result,
+  })
+})
 
 // const forgotPass = catchAsync(async (req: Request, res: Response) => {
 
@@ -90,7 +93,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 export const AuthController = {
   loginUser,
   refreshToken,
-  // changePassword,
+  changePassword,
   // forgotPass,
   // resetPassword
 }
