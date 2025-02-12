@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// application routes
+// application routes multiple routes  added here
 app.use('/api/v1/', router)
 // app.use('/api/v1/users/', userRoutes)
 // academic routes
@@ -39,12 +39,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next()
 })
 
-// test the GenerateFacultyId function
-// const test = async () => {
-//   const testId = await GenerateFacultyId()
-//   console.log('testId', testId)
-// }
 
-// test()
 
 export default app
